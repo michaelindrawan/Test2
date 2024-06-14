@@ -46,11 +46,16 @@ elif analysis_type == "Regression":
     st.write("Provide input features for regression prediction:")
 
     # Input features for regression
-    rm = st.number_input('Number of Rooms (RM)', 3.0, 9.0, 6.0)
-    lstat = st.number_input('Lower Status Population (LSTAT)', 1.0, 40.0, 12.0)
-    ptratio = st.number_input('Pupil-Teacher Ratio (PTRATIO)', 12.0, 22.0, 18.0)
+    medinc = st.number_input('MedInc', 0.0, 15.0, 3.0)
+    houseage = st.number_input('HouseAge', 0.0, 52.0, 15.0)
+    ave_rooms = st.number_input('AveRooms', 0.0, 10.0, 5.0)
+    ave_bedrms = st.number_input('AveBedrms', 0.0, 10.0, 1.0)
+    population = st.number_input('Population', 0.0, 35000.0, 1500.0)
+    ave_occup = st.number_input('AveOccup', 0.0, 50.0, 3.0)
+    latitude = st.number_input('Latitude', 32.0, 42.0, 35.0)
+    longitude = st.number_input('Longitude', -125.0, -114.0, -120.0)
 
-    input_data = np.array([[rm, lstat, ptratio]])
+    input_data = np.array([[medinc, houseage, ave_rooms, ave_bedrms, population, ave_occup, latitude, longitude]])
 
     if st.button('Predict Regression'):
         prediction = reg_model.predict(input_data)
@@ -59,7 +64,7 @@ elif analysis_type == "Regression":
         # Visualization
         fig, ax = plt.subplots()
         sns.scatterplot(x=input_data[:, 0], y=prediction, ax=ax, palette="deep")
-        ax.set_xlabel('Number of Rooms (RM)')
+        ax.set_xlabel('MedInc')
         ax.set_ylabel('Predicted Value')
         st.pyplot(fig)
 
