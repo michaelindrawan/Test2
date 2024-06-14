@@ -1,6 +1,8 @@
 import streamlit as st
 import joblib
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Load models
 clf_model = joblib.load('clf_model.pkl')
@@ -31,6 +33,13 @@ if analysis_type == "Classification":
         prediction = clf_model.predict(input_data)
         st.write(f'Predicted Class: {prediction[0]}')
 
+        # Visualization
+        fig, ax = plt.subplots()
+        sns.scatterplot(x=input_data[:, 0], y=input_data[:, 2], hue=prediction, ax=ax, palette="deep")
+        ax.set_xlabel('Sepal Length')
+        ax.set_ylabel('Petal Length')
+        st.pyplot(fig)
+
 # Regression Analysis
 elif analysis_type == "Regression":
     st.header("Regression Analysis with LinearRegression")
@@ -46,6 +55,13 @@ elif analysis_type == "Regression":
     if st.button('Predict Regression'):
         prediction = reg_model.predict(input_data)
         st.write(f'Predicted Value: {prediction[0]:.2f}')
+
+        # Visualization
+        fig, ax = plt.subplots()
+        sns.scatterplot(x=input_data[:, 0], y=prediction, ax=ax, palette="deep")
+        ax.set_xlabel('Number of Rooms (RM)')
+        ax.set_ylabel('Predicted Value')
+        st.pyplot(fig)
 
 # Clustering Analysis
 elif analysis_type == "Clustering":
@@ -63,3 +79,10 @@ elif analysis_type == "Clustering":
     if st.button('Predict Cluster'):
         prediction = kmeans_model.predict(input_data)
         st.write(f'Predicted Cluster: {prediction[0]}')
+
+        # Visualization
+        fig, ax = plt.subplots()
+        sns.scatterplot(x=input_data[:, 0], y=input_data[:, 2], hue=prediction, ax=ax, palette="deep")
+        ax.set_xlabel('Sepal Length')
+        ax.set_ylabel('Petal Length')
+        st.pyplot(fig)
