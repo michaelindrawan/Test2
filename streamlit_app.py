@@ -2,18 +2,20 @@ import streamlit as st
 import joblib
 import numpy as np
 import pandas as pd
+from pmdarima.arima import ARIMA
 
 # Load models
 clf_model = joblib.load('clf_model.pkl')
 reg_model = joblib.load('reg_model.pkl')
 kmeans_model = joblib.load('kmeans_model.pkl')
+arima_model = joblib.load('auto_arima_model.pkl')
 
 # Page title
-st.title("Real-Time Analysis: Classification, Regression, and Clustering")
+st.title("Real-Time Analysis: Classification, Regression, Clustering, and Time Series")
 
 # Sidebar for user inputs
 st.sidebar.title("Choose Analysis Type")
-analysis_type = st.sidebar.selectbox("Analysis Type", ["Classification", "Regression", "Clustering"])
+analysis_type = st.sidebar.selectbox("Analysis Type", ["Classification", "Regression", "Clustering", "Time Series"])
 
 # Sidebar for input method
 st.sidebar.title("Choose Input Method")
@@ -104,5 +106,22 @@ elif analysis_type == "Clustering":
             st.write(data)
             if st.button('Predict Cluster'):
                 predictions = kmeans_model.predict(data)
+                st.write("Predictions:")
+                st.write(predictions)
+
+# Time Series Analysis
+elif analysis_type == "Time Series":
+    st.header("Time Series Analysis with auto_arima")
+    st.write("Provide input features for time series prediction:")
+
+    if input_method == "Single Input":
+        st.write("Single input for time series is not typically supported.")
+    elif input_method == "Batch Input":
+        uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+        if uploaded_file is not None:
+            data = pd.read_csv(uploaded_file, parse_dates=['date'], index_col='date')
+            st.write(data)
+            if st.button('Predict Time Series'):
+                predictions = arima_model.predict(n_periods=len(data))
                 st.write("Predictions:")
                 st.write(predictions)
