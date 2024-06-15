@@ -2,8 +2,6 @@ import streamlit as st
 import joblib
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 # Load models
 clf_model = joblib.load('clf_model.pkl')
@@ -46,15 +44,8 @@ if analysis_type == "Classification":
             st.write(data)
             if st.button('Predict Classification'):
                 predictions = clf_model.predict(data)
-                data['Prediction'] = predictions
                 st.write("Predictions:")
-                st.write(data)
-
-                # Pair plot visualization
-                st.subheader("Pair Plot of Features and Predictions")
-                pairplot_data = data.copy()
-                sns.pairplot(pairplot_data, hue='Prediction')
-                st.pyplot()
+                st.write(predictions)
 
 # Regression Analysis
 elif analysis_type == "Regression":
@@ -85,15 +76,8 @@ elif analysis_type == "Regression":
             st.write(data)
             if st.button('Predict Regression'):
                 predictions = reg_model.predict(data)
-                data['Prediction'] = predictions
                 st.write("Predictions:")
-                st.write(data)
-
-                # Pair plot visualization
-                st.subheader("Pair Plot of Features and Predictions")
-                pairplot_data = data.copy()
-                sns.pairplot(pairplot_data)
-                st.pyplot()
+                st.write(predictions)
 
 # Clustering Analysis
 elif analysis_type == "Clustering":
@@ -120,13 +104,5 @@ elif analysis_type == "Clustering":
             st.write(data)
             if st.button('Predict Cluster'):
                 predictions = kmeans_model.predict(data)
-                data['Cluster'] = predictions
-                st.write("Clusters:")
-                st.write(data)
-
-                # Pair plot visualization
-                st.subheader("Pair Plot of Features and Clusters")
-                pairplot_data = data.copy()
-                pairplot_data['Cluster'] = pairplot_data['Cluster'].astype(str)
-                sns.pairplot(pairplot_data, hue='Cluster')
-                st.pyplot()
+                st.write("Predictions:")
+                st.write(predictions)
