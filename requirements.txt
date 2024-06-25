@@ -1,6 +1,6 @@
 streamlit
 scikit-learn==1.2.2
-joblib==1.2.0
-numpy==1.26.4
-pandas==2.1.4
-pmdarima==2.0.4
+joblib
+numpy
+pandas
+pmdarima
