@@ -2,13 +2,13 @@ import streamlit as st
 import joblib
 import numpy as np
 import pandas as pd
-from pmdarima import auto_arima
+# from pmdarima import auto_arima
 
 # Load models
 clf_model = joblib.load('clf_model.pkl')
 reg_model = joblib.load('reg_model.pkl')
 kmeans_model = joblib.load('kmeans_model.pkl')
-arima_model = joblib.load('auto_arima_model.pkl')
+# arima_model = joblib.load('auto_arima_model.pkl')
 
 # Page title
 st.title("Real-Time Analysis: Classification, Regression, Clustering, and Time Series")
@@ -109,19 +109,19 @@ elif analysis_type == "Clustering":
                 st.write("Predictions:")
                 st.write(predictions)
 
-# Time Series Analysis
-elif analysis_type == "Time Series":
-    st.header("Time Series Analysis with auto_arima")
-    st.write("Provide input features for time series prediction:")
+# # Time Series Analysis
+# elif analysis_type == "Time Series":
+#     st.header("Time Series Analysis with auto_arima")
+#     st.write("Provide input features for time series prediction:")
 
-    if input_method == "Single Input":
-        st.write("Single input for time series is not typically supported.")
-    elif input_method == "Batch Input":
-        uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
-        if uploaded_file is not None:
-            data = pd.read_csv(uploaded_file, parse_dates=['date'], index_col='date')
-            st.write(data)
-            if st.button('Predict Time Series'):
-                predictions = arima_model.predict(n_periods=len(data))
-                st.write("Predictions:")
-                st.write(predictions)
+#     if input_method == "Single Input":
+#         st.write("Single input for time series is not typically supported.")
+#     elif input_method == "Batch Input":
+#         uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+#         if uploaded_file is not None:
+#             data = pd.read_csv(uploaded_file, parse_dates=['date'], index_col='date')
+#             st.write(data)
+#             if st.button('Predict Time Series'):
+#                 predictions = arima_model.predict(n_periods=len(data))
+#                 st.write("Predictions:")
+#                 st.write(predictions)
